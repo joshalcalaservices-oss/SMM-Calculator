@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SMM Calculator - Notion Embed</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f7f9fc;
+            padding: 20px;
+            line-height: 1.5;
+        }
+
+        .calculator {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            overflow: hidden;
+            min-height: 600px;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            color: white;
+            padding: 25px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .content {
+            padding: 25px;
+        }
+
+        .input-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-group label {
+            display: block;
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+        }
+
+        .input-group input, .input-group select {
+            width: 100%;
+            padding: 10px 12px;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            transition: border-color 0.2s;
+            background: white;
+        }
+
+        .input-group input:focus, .input-group select:focus {
+            outline: none;
+            border-color: #6366f1;
+        }
+
+        .results {
+            background: #f8fafc;
+            border-radius: 10px;
+            padding: 20px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .total-price {
+            text-align: center;
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .total-price .amount {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 5px;
+        }
+
+        .breakdown {
+            display: grid;
+            gap: 8px;
+        }
+
+        .breakdown-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid #e2e8f0;
+            font-size: 0.9rem;
+        }
+
+        .breakdown-item:last-child {
+            border-bottom: none;
+            font-weight: 700;
+            font-size: 1rem;
+            color: #6366f1;
+        }
+
+        .breakdown-item.essential {
+            background: #eff6ff;
+            margin: 0 -10px;
+            padding: 10px;
+            border-radius: 6px;
+            border-bottom: none;
+            margin-bottom: 4px;
+        }
+
+        .section-title {
+            font-weight: 700;
+            color: #1f2937;
+            margin: 15px 0 10px 0;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .profit-box {
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        .profit-amount {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        @media (max-width: 600px) {
+            .input-section {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            
+            .calculator {
+                margin: 0;
+                border-radius: 0;
+            }
+            
+            body {
+                padding: 0;
+            }
+            
+            .total-price .amount {
+                font-size: 2rem;
+            }
+        }
+
+        /* Notion-specific optimizations */
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 1.4rem;
+            }
+            
+            .content {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="calculator">
+        <div class="header">
+            <h1>📱 Social Media Management Calculator</h1>
+            <p>Professional package pricing tool</p>
+        </div>
+        
+        <div class="content">
+            <div class="input-section">
+                <div>
+                    <div class="input-group">
+                        <label for="reels">Monthly Reels ($35 each)</label>
+                        <input type="number" id="reels" min="0" value="0" placeholder="0">
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="graphics">Monthly Graphics ($20 each)</label>
+                        <input type="number" id="graphics" min="0" value="0" placeholder="0">
+                    </div>
+                </div>
+                
+                <div>
+                    <div class="input-group">
+                        <label for="engagement">Engagement Minutes</label>
+                        <select id="engagement">
+                            <option value="0">No Engagement ($0)</option>
+                            <option value="15">15 min ($97.50)</option>
+                            <option value="30" selected>30 min ($195)</option>
+                            <option value="45">45 min ($292.50)</option>
+                            <option value="60">60 min ($390)</option>
+                        </select>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="profit">Additional Profit %</label>
+                        <input type="number" id="profit" min="0" max="50" value="5" placeholder="5">
+                    </div>
+                </div>
+            </div>
+
+            <div class="results">
+                <div class="total-price">
+                    <div class="amount" id="total">$445</div>
+                    <div>Total Package Price</div>
+                </div>
+
+                <div class="breakdown">
+                    <div class="section-title">Essential Services (Always Included)</div>
+                    <div class="breakdown-item essential">
+                        <span>Monthly Analytics</span>
+                        <span>$50</span>
+                    </div>
+                    <div class="breakdown-item essential">
+                        <span>Content Scheduling</span>
+                        <span>$40</span>
+                    </div>
+                    <div class="breakdown-item essential">
+                        <span>Strategy & Calendar</span>
+                        <span>$200</span>
+                    </div>
+                    <div class="breakdown-item essential">
+                        <span>IG Stories</span>
+                        <span>$80</span>
+                    </div>
+
+                    <div class="section-title">Custom Services</div>
+                    <div class="breakdown-item">
+                        <span>Engagement (<span id="eng-time">30</span> min)</span>
+                        <span id="eng-cost">$195</span>
+                    </div>
+                    <div class="breakdown-item">
+                        <span>Reels (<span id="reel-qty">0</span>)</span>
+                        <span id="reel-cost">$0</span>
+                    </div>
+                    <div class="breakdown-item">
+                        <span>Graphics (<span id="graphics-qty">0</span>)</span>
+                        <span id="graphics-cost">$0</span>
+                    </div>
+
+                    <div class="breakdown-item">
+                        <span><strong>Subtotal (w/ 15% base profit)</strong></span>
+                        <span id="subtotal"><strong>$565</strong></span>
+                    </div>
+                </div>
+
+                <div class="profit-box">
+                    <div class="profit-amount" id="additional-profit">$28</div>
+                    <div>Additional Profit (<span id="profit-percent">5</span>%)</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 🔧 EDIT PRICES HERE
+        const PRICES = {
+            reel: 35,
+            graphics: 20,
+            analytics: 50,
+            scheduling: 40,
+            strategy: 200,
+            stories: 80,
+            engagementPer30Min: 195
+        };
+
+        const essentials = PRICES.analytics + PRICES.scheduling + PRICES.strategy + PRICES.stories;
+
+        function calculate() {
+            const reels = parseInt(document.getElementById('reels').value) || 0;
+            const graphics = parseInt(document.getElementById('graphics').value) || 0;
+            const engagementMins = parseInt(document.getElementById('engagement').value) || 0;
+            const profitPercent = parseFloat(document.getElementById('profit').value) || 0;
+
+            const reelsCost = reels * PRICES.reel;
+            const graphicsCost = graphics * PRICES.graphics;
+            const engagementCost = (engagementMins / 30) * PRICES.engagementPer30Min;
+            
+            const subtotal = essentials + reelsCost + graphicsCost + engagementCost;
+            const additionalProfit = subtotal * (profitPercent / 100);
+            const total = subtotal + additionalProfit;
+
+            // Update display
+            document.getElementById('total').textContent = `$${Math.round(total)}`;
+            document.getElementById('eng-time').textContent = engagementMins;
+            document.getElementById('eng-cost').textContent = `$${engagementCost}`;
+            document.getElementById('reel-qty').textContent = reels;
+            document.getElementById('reel-cost').textContent = `$${reelsCost}`;
+            document.getElementById('graphics-qty').textContent = graphics;
+            document.getElementById('graphics-cost').textContent = `$${graphicsCost}`;
+            document.getElementById('subtotal').innerHTML = `<strong>$${subtotal}</strong>`;
+            document.getElementById('additional-profit').textContent = `$${Math.round(additionalProfit)}`;
+            document.getElementById('profit-percent').textContent = profitPercent;
+        }
+
+        // Event listeners
+        document.getElementById('reels').addEventListener('input', calculate);
+        document.getElementById('graphics').addEventListener('input', calculate);
+        document.getElementById('engagement').addEventListener('change', calculate);
+        document.getElementById('profit').addEventListener('input', calculate);
+
+        // Initialize
+        calculate();
+    </script>
+</body>
+</html>
+</html>
